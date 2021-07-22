@@ -1,0 +1,42 @@
+<!DOCTYPE html> 
+<html>
+<head> 
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" /> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<title>Hello, World</title> 
+<style type="text/css"> 
+html{height:100%} 
+body{height:100%;margin:0px;padding:0px} 
+#container{height:100%} 
+</style> 
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=1.0&type=webgl&ak=RlHqwKSBI8GV0qFgFdN1CNqFD0fMmhho">
+</script>
+</head> 
+  
+<body> 
+<div id="container"></div>
+<script type="text/javascript">
+			// 创建地图实例 
+		var map = new BMapGL.Map("container");
+		//滚轮缩放
+		map.enableScrollWheelZoom(true);
+		// 创建点坐标 ,获取经纬度，定位起点
+		var point = new BMapGL.Point(116.404, 39.915);
+		// 创建标注，定位点
+		var marker = new BMapGL.Marker(point);  
+		map.addOverlay(marker);
+		//定位终点
+		var point1 = new BMapGL.Point(116.4, 39.915);
+		var marker1 = new BMapGL.Marker(point1);        // 创建标注   
+		map.addOverlay(marker1); // 将标注添加到地图中
+		//放大倍数
+		map.centerAndZoom(point,15);
+		marker.enableDragging();
+		// 初始化地图，设置中心点坐标和地图级别 ，实现拖拽效果，获取经纬度
+		marker.addEventListener("dragend", function(e){   
+		alert("当前位置：" + e.point.lng + ", " + e.point.lat);     
+		});
+		var driving = new BMapGL.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});
+		driving.search(point, point1);
+</script> 
+</body> 
